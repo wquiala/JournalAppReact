@@ -3,7 +3,7 @@ import { userForm } from '../../hooks/userForm';
 import { type MouseEvent, type ChangeEvent } from 'react';
 import Swal from 'sweetalert2';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import { login } from '../../redux/slices/auth.slice';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../firebase/firebaseConfig';
@@ -16,8 +16,8 @@ export const LoginScreem = () => {
     password: '123456',
   });
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.uiReducer);
-
+  /*   const { loading } = useAppSelector((state) => state.uiReducer);
+   */
   const { email, password } = values;
   const handleLogin = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,6 +66,7 @@ export const LoginScreem = () => {
         // ...
       });
   };
+
   return (
     <>
       <h3 className="auth_title">Login</h3>

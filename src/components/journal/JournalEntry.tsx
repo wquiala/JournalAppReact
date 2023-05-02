@@ -1,25 +1,36 @@
-import React from 'react';
+import { useAppDispatch } from '../../redux/hooks';
+import { nostesActive, type Note } from '../../redux/slices/notes.slice';
+import moment from 'moment';
 
-export const JournalEntry = () => {
+interface Props {
+  note: Note;
+}
+export const JournalEntry = (prop: Props) => {
+  const { body, date, imgUrl, title } = prop.note;
+  const fecha = moment(date);
+  const dispatch = useAppDispatch();
+
+  const handleNoteActive = () => {
+    dispatch(nostesActive(prop.note));
+  };
   return (
-    <div className="journal_entry pointer">
-      <div
-        className="journal_entry-picture"
-        style={{
-          backgroundSize: 'cover',
-          backgroundImage:
-            'url(https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg)',
-        }}
-      ></div>
+    <div className="journal_entry pointer" onClick={handleNoteActive}>
+      {imgUrl !== undefined && (
+        <div
+          className="journal_entry-picture"
+          style={{
+            backgroundSize: 'cover',
+            backgroundImage: `url(${imgUrl})`,
+          }}
+        ></div>
+      )}
       <div className="journal-entry-body">
-        <p className="journal-entry-title">Un nuevo dia</p>
-        <p className="journal-entry-content">
-          sjdksjkdjdkjdksjkdjksjkdjsdkjdkjskjdksdjksdjksjkdjdkjsdkjd
-        </p>
+        <p className="journal-entry-title">{title}</p>
+        <p className="journal-entry-content">{body} </p>
       </div>
       <div className="journal-entry-date-box">
-        <span>Monday</span>
-        <h4>28</h4>
+        <span>{fecha.format('dddd')}</span>
+        <h4>{fecha.format('Do')}</h4>
       </div>
     </div>
   );

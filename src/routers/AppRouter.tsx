@@ -8,6 +8,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/slices/auth.slice';
+import { loadNotes } from '../helpers/loadNotes';
+import { notesLoad } from '../redux/slices/notes.slice';
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +23,12 @@ export const AppRouter = () => {
         // https://firebase.google.com/docs/reference/js/firebase.User
         // ...
         setIsLoggedIn(true);
+        const notes = loadNotes(user.uid);
+        notes
+          .then((notes) => dispatch(notesLoad(notes)))
+          .catch((error) => {
+            console.log(error);
+          });
 
         dispatch(login({ uid: user.uid, name: user.displayName }));
       } else {
@@ -32,7 +40,6 @@ export const AppRouter = () => {
 
   if (checking) return <h1>Espere...</h1>;
 
-  console.log(isLoggedIn);
   return (
     <div className="container">
       <BrowserRouter>

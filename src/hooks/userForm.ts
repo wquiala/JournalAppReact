@@ -1,12 +1,15 @@
-import { ChangeEvent, useState } from 'react';
+/* eslint-disable @typescript-eslint/ban-types */
+import { type ChangeEvent, useState } from 'react';
 
 export const userForm = <T extends Object>(initialState: T) => {
   const [values, setValues] = useState(initialState);
 
-  const reset = () => {
-    setValues(initialState);
+  const reset = (newFormState = initialState) => {
+    setValues(newFormState);
   };
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = ({
+    target,
+  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = target;
 
     setValues({
