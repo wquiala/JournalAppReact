@@ -3,6 +3,7 @@ import { userForm } from '../../hooks/userForm';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { nostesActive, type Note } from '../../redux/slices/notes.slice';
 import { NotesAppBar } from './NotesAppBar';
+import { deleteNote } from '../../actions/notes';
 interface Props {
   notes: Note[];
 }
@@ -13,7 +14,7 @@ export const NotesScreen = (props: Props) => {
     const dispatch = useAppDispatch();
     const { handleInputChange, values, reset } = userForm(active);
 
-    const { body, title } = values;
+    const { body, title, imgUrl } = values;
 
     const activeId = useRef(active.id);
 
@@ -26,7 +27,11 @@ export const NotesScreen = (props: Props) => {
 
     useEffect(() => {
       dispatch(nostesActive(values));
-    }, [values, dispatch]);
+    }, [body, title, imgUrl]);
+
+    const handleDelete = () => {
+      void dispatch(deleteNote(active.id));
+    };
 
     return (
       <div className="notes-main-content">
@@ -48,16 +53,18 @@ export const NotesScreen = (props: Props) => {
             name="body"
             onChange={handleInputChange}
           ></textarea>
-          {values.imgUrl !== '' && (
+          {active.imgUrl !== '' && (
             <div className="notes-image">
-              <img
-                src="https://images.unsplash.com/reserve/Af0sF2OS5S5gatqrKzVP_Silhoutte.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"
-                alt="img"
-              />
+              <img src={active.imgUrl} alt="img" />
             </div>
           )}
+          <button className="btn btn-danger" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       </div>
     );
+  } else {
+    return <></>;
   }
 };

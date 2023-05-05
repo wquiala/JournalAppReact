@@ -5,6 +5,7 @@ import { JournalEntrys } from './JournalEntrys';
 import { auth } from '../../firebase/firebaseConfig';
 import { type MouseEvent } from 'react';
 import { startNewNote } from '../../actions/notes';
+import { notesLogoutCleaning } from '../../redux/slices/notes.slice';
 
 export const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,7 @@ export const Sidebar = () => {
       .catch((error) => {
         console.log(error);
       });
+    dispatch(notesLogoutCleaning());
   };
 
   const handleAddNew = (e: MouseEvent<HTMLDivElement>) => {

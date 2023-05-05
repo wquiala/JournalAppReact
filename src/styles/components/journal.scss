@@ -43,16 +43,18 @@
 .journal-entries{
     margin-top: 30px;
     flex: 1 1 auto;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .journal_entry{
     background-color: white;
     border-radius: 4px;
     color: $dark-grey;
+    justify-content: space-between;
     display: flex;
     margin-bottom: 10px;
     overflow: hidden;
+    
 
 }
 
@@ -73,11 +75,15 @@
     font-size: 10px;
 }
 
-.journal-entry-date-box span{
-    align-items: center;
+.journal-entry-date-box{
+    align-items: end;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 5px;
+}
+
+.journal-entry-date-box span{
+    font-size: 12px;
 }
 

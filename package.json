@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.10.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-redux": "^7.1.25",
     "firebase": "^9.19.1",

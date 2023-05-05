@@ -1,40 +1,47 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
-import { type Dispatch } from 'redux';
 import { type store } from '../redux/store';
 import { db } from '../firebase/firebaseConfig';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import {
   type Note,
   nostesActive,
   notesUpdate,
+  notesDelete,
 } from '../redux/slices/notes.slice';
 import Swal from 'sweetalert2';
+import { fileUpload } from '../helpers/fileUploads';
+import { useAppDispatch } from '../redux/hooks';
 
 export const startNewNote = () => {
-  return async (dispatch: Dispatch, getState: typeof store.getState) => {
-    const { uid } = getState().authReducer;
+  return async (dispatch = useAppDispatch()) => {
     const newNote = {
       title: '',
       body: '',
       date: new Date().getTime(),
       imgUrl: '',
     };
-    if (uid !== null) {
-      const notee = doc(collection(db, `${uid}`, '/journal/notes/'));
+    dispatch(nostesActive({ ...newNote, id: '' }));
+    // if (uid !== null) {
+    // await saveFirebase(uid, { ...newNote, id: '' });
+    /* const notee = doc(collection(db, `${uid}`, '/journal/notes/'));
       await setDoc(notee, newNote);
-      dispatch(nostesActive({ ...newNote, id: notee.id }));
-    }
+      dispatch(nostesActive({ ...newNote, id: notee.id })); */
+    // }
   };
 };
 
-export const startSaveFirestore = (note: Note) => {
-  return async (dispatch: Dispatch, getState: typeof store.getState) => {
+export const startUpdateFirestore = (note: Note) => {
+  return async (
+    dispatch = useAppDispatch(),
+    getState: typeof store.getState,
+  ) => {
     const { uid } = getState().authReducer;
     const noteToFirestore = { ...note };
     if (uid !== null) {
       const notee = doc(db, `${uid}`, `/journal/notes/${note.id}`);
       await setDoc(notee, noteToFirestore);
+
       dispatch(notesUpdate(note));
+      dispatch(nostesActive(note));
       void Swal.fire('Saved', note.title, 'success');
     }
     /* notes.forEach((note) => {
@@ -42,5 +49,48 @@ export const startSaveFirestore = (note: Note) => {
     });
     dispatch(notesAddNew(notelist));
     console.log(notes); */
+  };
+};
+
+export const startUploadImg = (file: File) => {
+  return async (
+    dispatch = useAppDispatch(),
+    getState: typeof store.getState,
+  ) => {
+    const { active } = getState().noteReducer;
+    if (active !== null) {
+      const activeNote = { ...active };
+      void Swal.fire({
+        title: 'Uploading...',
+        text: 'Please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const fileUrl = await fileUpload(file);
+
+      Swal.close();
+      if (activeNote !== undefined) {
+        activeNote.imgUrl = fileUrl.secure_url;
+        dispatch(nostesActive(activeNote));
+
+        // await dispatch(startUpdateFirestore(activeNote));
+      }
+    }
+  };
+};
+
+export const deleteNote = (id: string) => {
+  return async (
+    dispatch = useAppDispatch(),
+    getState: typeof store.getState,
+  ) => {
+    const { uid } = getState().authReducer;
+    if (uid != null) {
+      await deleteDoc(doc(db, `${uid}`, `/journal/notes/${id}`));
+
+      dispatch(notesDelete(id));
+    }
   };
 };

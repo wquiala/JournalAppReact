@@ -55,14 +55,18 @@ export const noteSlice = createSlice({
         ...state,
       };
     },
-    notesDelete: (state, action: PayloadAction) => {
+    notesDelete: (state, action: PayloadAction<string>) => {
       return {
         ...state,
+        active: null,
+        notes: state.notes.filter((note) => note.id !== action.payload),
       };
     },
     notesLogoutCleaning: (state, action: PayloadAction) => {
       return {
         ...state,
+        active: null,
+        notes: [],
       };
     },
   },
