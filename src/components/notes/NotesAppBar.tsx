@@ -31,7 +31,7 @@ export const NotesAppBar = (props: Props) => {
     }
   };
   return (
-    <div className="notes-appbar">
+    <div className="notes-appbar animate__animated animate__fadeIn animate__faster">
       <span>28 de agosto 2020</span>
       <input
         id="uploadFile"

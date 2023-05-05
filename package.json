@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://wquiala.github.io/JournalAppReact/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -14,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-redux": "^7.1.25",
     "firebase": "^9.19.1",
+    "http-server": "^14.1.1",
     "moment": "^2.29.4",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",

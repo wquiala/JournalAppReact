@@ -79,7 +79,11 @@ export const RegisterScreem = () => {
   return (
     <>
       <h3 className="auth_title">Register</h3>
-      <form action="" onSubmit={handleRegister}>
+      <form
+        className="animate__animated animate__fadeIn animate__faster"
+        action=""
+        onSubmit={handleRegister}
+      >
         {errorMsg !== null && (
           <div className="auth_alert_error">{errorMsg}</div>
         )}

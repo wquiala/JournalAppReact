@@ -70,7 +70,11 @@ export const LoginScreem = () => {
   return (
     <>
       <h3 className="auth_title">Login</h3>
-      <form action="" onSubmit={handleLogin}>
+      <form
+        className="animate__animated animate__fadeIn animate__faster"
+        action=""
+        onSubmit={handleLogin}
+      >
         <input
           className="auth_input"
           type="text"

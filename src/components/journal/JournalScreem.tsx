@@ -8,7 +8,7 @@ export const JournalScreem = () => {
   const { active, notes } = useAppSelector((state) => state.noteReducer);
 
   return (
-    <div className="journal_main_content">
+    <div className="journal_main_content animate__animated animate__fadeIn animate__faster">
       <Sidebar />
       <main>
         {active !== null ? <NotesScreen notes={notes} /> : <NothingSelected />}

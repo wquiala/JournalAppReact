@@ -14,7 +14,10 @@ export const JournalEntry = (prop: Props) => {
     dispatch(nostesActive(prop.note));
   };
   return (
-    <div className="journal_entry pointer" onClick={handleNoteActive}>
+    <div
+      className="journal_entry pointer animate__animated animate__fadeIn animate__faster"
+      onClick={handleNoteActive}
+    >
       {imgUrl !== undefined && (
         <div
           className="journal_entry-picture"
