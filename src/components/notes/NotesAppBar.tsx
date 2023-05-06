@@ -3,6 +3,7 @@ import { startUpdateFirestore, startUploadImg } from '../../actions/notes';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { type Note } from '../../redux/slices/notes.slice';
 import { saveFirebase } from '../../helpers/saveFirebase';
+import moment from 'moment';
 interface Props {
   note: Note;
 }
@@ -32,7 +33,13 @@ export const NotesAppBar = (props: Props) => {
   };
   return (
     <div className="notes-appbar animate__animated animate__fadeIn animate__faster">
-      <span>28 de agosto 2020</span>
+      <span>
+        {moment(new Date().getTime()).format('Do') +
+          ' ' +
+          moment(new Date().getTime()).format('MMMM') +
+          ' ' +
+          moment(new Date().getTime()).format('YYYY')}
+      </span>
       <input
         id="uploadFile"
         type="file"

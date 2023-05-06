@@ -26,7 +26,12 @@ export const NotesScreen = (props: Props) => {
     }, [active, reset]);
 
     useEffect(() => {
-      dispatch(nostesActive(values));
+      dispatch(
+        nostesActive({
+          ...values,
+          imgUrl: active.imgUrl,
+        }),
+      );
     }, [body, title, imgUrl]);
 
     const handleDelete = () => {

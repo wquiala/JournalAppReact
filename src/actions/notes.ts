@@ -13,19 +13,14 @@ import { useAppDispatch } from '../redux/hooks';
 
 export const startNewNote = () => {
   return async (dispatch = useAppDispatch()) => {
-    const newNote = {
+    const newNote: Note = {
       title: '',
       body: '',
       date: new Date().getTime(),
       imgUrl: '',
+      id: '',
     };
-    dispatch(nostesActive({ ...newNote, id: '' }));
-    // if (uid !== null) {
-    // await saveFirebase(uid, { ...newNote, id: '' });
-    /* const notee = doc(collection(db, `${uid}`, '/journal/notes/'));
-      await setDoc(notee, newNote);
-      dispatch(nostesActive({ ...newNote, id: notee.id })); */
-    // }
+    dispatch(nostesActive(newNote));
   };
 };
 
