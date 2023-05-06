@@ -39,11 +39,6 @@ export const startUpdateFirestore = (note: Note) => {
       dispatch(nostesActive(note));
       void Swal.fire('Saved', note.title, 'success');
     }
-    /* notes.forEach((note) => {
-      notelist.push(note);
-    });
-    dispatch(notesAddNew(notelist));
-    console.log(notes); */
   };
 };
 

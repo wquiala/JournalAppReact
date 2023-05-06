@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { type Note } from '../../redux/slices/notes.slice';
 import { saveFirebase } from '../../helpers/saveFirebase';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 interface Props {
   note: Note;
 }
@@ -12,11 +13,19 @@ export const NotesAppBar = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const handleSaveFirestore = () => {
-    if (active != null) {
-      if (notes.find((note) => note.id === props.note.id) != null) {
-        void dispatch(startUpdateFirestore(active));
-      } else {
-        void dispatch(saveFirebase(active));
+    if (active?.title === '') {
+      void Swal.fire(
+        'Error',
+        'El titulo de la nota no puede estar vacio',
+        'error',
+      );
+    } else {
+      if (active != null) {
+        if (notes.find((note) => note.id === props.note.id) != null) {
+          void dispatch(startUpdateFirestore(active));
+        } else {
+          void dispatch(saveFirebase(active));
+        }
       }
     }
   };
