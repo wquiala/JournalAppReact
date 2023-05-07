@@ -10,6 +10,7 @@ import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/slices/auth.slice';
 import { loadNotes } from '../helpers/loadNotes';
 import { notesLoad } from '../redux/slices/notes.slice';
+import ErrorPage from '../components/ErrorPage';
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +55,7 @@ export const AppRouter = () => {
           />
           <Route
             path="/"
+            errorElement={<ErrorPage />}
             element={
               <PrivateRoute isAuthenticated={isLoggedIn}>
                 <JournalScreem />

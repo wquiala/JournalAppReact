@@ -5,14 +5,9 @@ interface Props {
   isAuthenticated: boolean;
 }
 export const PrivateRoute = (props: Props) => {
-  console.log(props.isAuthenticated);
   return props.isAuthenticated ? (
     props.children
   ) : (
     <Navigate to={'/auth/login'} />
   );
-  /*  if (props.isAuthenticated) return props.children;
-  else {
-    return <Navigate to={'/auth/login'} />;
-  } */
 };
