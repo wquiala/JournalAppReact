@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
 import { userForm } from '../../hooks/userForm';
 import { type MouseEvent, type ChangeEvent } from 'react';
-import Swal from 'sweetalert2';
 
 import { useAppDispatch } from '../../redux/hooks';
-import { login } from '../../redux/slices/auth.slice';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../../firebase/firebaseConfig';
-import { finishLoading, startLoading } from '../../redux/slices/ui.slice';
+import { startGoogleLogin, startLogin } from '../../actions/auth';
 // import { startGoogleLogin } from '../../actions/auth';
 
 export const LoginScreem = () => {
@@ -16,55 +12,16 @@ export const LoginScreem = () => {
     password: '123456',
   });
   const dispatch = useAppDispatch();
-  /*   const { loading } = useAppSelector((state) => state.uiReducer);
-   */
+
   const { email, password } = values;
   const handleLogin = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(startLoading());
-    dispatch(() => {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          dispatch(login({ uid: user.uid, name: user.displayName }));
-          dispatch(finishLoading());
-
-          // ...
-        })
-        .catch((error) => {
-          void Swal.fire('Error', error.message, 'error');
-
-          /* const errorCode = error.code;
-          const errorMessage = error.message; */
-        });
-    });
+    dispatch(startLogin(email, password));
   };
 
   const handleGoogleLogin = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    signInWithPopup(auth, provider)
-      .then(({ user }) => {
-        dispatch(login({ uid: user.uid, name: user.displayName }));
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        /* const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ... */
-      })
-      .catch((error) => {
-        void Swal.fire('Error', error.message, 'error');
-        // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+    dispatch(startGoogleLogin());
   };
 
   return (

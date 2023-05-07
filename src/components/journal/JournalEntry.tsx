@@ -6,13 +6,15 @@ interface Props {
   note: Note;
 }
 export const JournalEntry = (prop: Props) => {
+  const dispatch = useAppDispatch();
+
   const { body, date, imgUrl, title } = prop.note;
   const fecha = moment(date);
-  const dispatch = useAppDispatch();
 
   const handleNoteActive = () => {
     dispatch(nostesActive(prop.note));
   };
+
   return (
     <div
       className="journal_entry pointer animate__animated animate__fadeIn animate__faster"

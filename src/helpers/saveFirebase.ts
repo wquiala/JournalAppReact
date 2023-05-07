@@ -17,7 +17,6 @@ export const saveFirebase = (note: Note) => {
     const { notes } = getState().noteReducer;
     const listNotesNew: Note[] = [...notes];
 
-    console.log(note);
     const { uid } = getState().authReducer;
     if (uid != null) {
       const notee = doc(collection(db, `${uid}`, '/journal/notes/'));
